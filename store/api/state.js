@@ -5,6 +5,8 @@ export default function () {
       minPrice: "",
       maxPrice: "",
     },
-    datas: [],
+    dataApi: [],
+    filterTable: [],
+    isLoading: false
   };
 }
