@@ -15,10 +15,10 @@
         <template v-slot:header>
           <div class="d-flex justify-space-between mb-6">
             <div>
-              <span
-                >Menampilkan {{ calPage.from }} - {{ calPage.end }} dari
-                {{ totalData }}</span
-              >
+              <span>
+                Menampilkan {{ calPage.start }} - {{ calPage.end }} dari
+                {{ totalData }}
+              </span>
             </div>
             <div>
               <v-menu offset-y>
@@ -82,6 +82,17 @@
             </v-col>
           </v-row>
         </template>
+        <template v-slot:footer>
+          <div class="justify-center mt-6">
+            <v-pagination
+              v-model="page"
+              :length="totalPage"
+              :total-visible="7"
+              @next="nextPage"
+              @previous="formerPage"
+            ></v-pagination>
+          </div>
+        </template>
       </v-data-iterator>
     </div>
   </div>
@@ -123,12 +134,15 @@ export default {
       return this.keys.filter((key) => key !== "Name");
     },
     calPage() {
-      const from = this.page === 1 ? 1 : this.itemsPerPage + 1;
       const end = this.page * this.itemsPerPage;
-      return { from, end };
+      const start = this.page === 1 ? 1 : end - this.itemsPerPage + 1;
+      return { start, end };
     },
     totalData() {
       return this.dataTable.length;
+    },
+    totalPage() {
+      return Math.ceil(parseInt(this.totalData, 10) / this.itemsPerPage);
     },
   },
   methods: {
@@ -140,6 +154,7 @@ export default {
     },
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
+      this.page = 1;
     },
   },
 };
