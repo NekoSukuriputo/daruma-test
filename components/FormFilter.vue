@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-form ref="form" lazy-validation @submit.prevent="submitFilter">
-      <v-card class="mx-auto pa-4" min-width="344">
+      <v-card class="mx-auto pa-4" min-width="250">
         <div class="mb-8">
           <span class="subtitle-1">Brand</span>
           <v-checkbox

@@ -11,6 +11,8 @@
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         hide-default-footer
+        :sort-by="sortBy.toLowerCase()"
+        :search="search"
       >
         <template v-slot:header>
           <div class="d-flex justify-space-between mb-6">
@@ -19,6 +21,30 @@
                 Menampilkan {{ calPage.start }} - {{ calPage.end }} dari
                 {{ totalData }}
               </span>
+            </div>
+            <div>
+              <v-text-field
+                v-model="search"
+                clearable
+                hide-details
+                outlined
+                prepend-inner-icon="mdi-magnify"
+                label="Cari"
+                dense
+              ></v-text-field>
+            </div>
+            <div class=" pl-2">
+              <v-select
+                v-model="sortBy"
+                hide-details
+                outlined
+                :items="keys"
+                prepend-inner-icon="mdi-magnify"
+                label="Urutkan berdasarkan"
+                item-text="label"
+                item-value="value"
+                dense
+              ></v-select>
             </div>
             <div>
               <v-menu offset-y>
@@ -114,7 +140,12 @@ export default {
       sortDesc: false,
       page: 1,
       itemsPerPage: 40,
-      sortBy: "name",
+      sortBy: "sname",
+      keys: [
+        { label: "Nama Produk", value: "sname" },
+        { label: "Harga", value: "price_pre_tax" },
+        { label: "Tanggal", value: "created_at" },
+      ],
     };
   },
   components: {
